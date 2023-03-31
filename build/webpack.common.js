@@ -6,6 +6,8 @@ const webpack = require('webpack')
 const { srcPath, distPath, isDev } = require('./config')
 const { setEntry, setHtmlPlugin } = require('./utils')
 
+console.log(isDev)
+
 module.exports = {
   entry: setEntry,
   output: {
@@ -16,13 +18,14 @@ module.exports = {
     alias: {
       '@': srcPath
     },
-    extensions: ['.js', '.json', '.vue', '.jsx', '.ts', '.tsx']
+    extensions: ['.js', '.json', '.vue']
   },
   module: {
     rules: [
       {
         test: /\.vue$/,
-        use: ['vue-loader']
+        use: ['vue-loader'],
+        exclude: /node_modules/
       },
       {
         test: /\.js/,
@@ -73,7 +76,7 @@ module.exports = {
     new webpack.DefinePlugin({
       BASE_URL: "'./'",
       __VUE_OPTIONS_API__: true,
-      __VUE_PROD_DEVTOOLS__: !isDev
+      __VUE_PROD_DEVTOOLS__: isDev
     })
   ]
 }
@@ -94,3 +97,9 @@ module.exports = {
       chunks: ['pageTwo']
     })
  */
+
+// "sideEffects": [
+//   "**/*.css",
+//   "**/*.scss",
+//   "**/*.vue"
+// ],

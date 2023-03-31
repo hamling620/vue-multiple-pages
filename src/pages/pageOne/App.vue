@@ -11,14 +11,13 @@
     <img :src="imageUrl" alt="">
     {{  state.name }}
     <input type="text" v-model="state.name">
-    111222
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style>
 .App {
   font-size: 40px;
-  color: $primaryColor;
+  color: red;
 }
 img {
   width: 100px;

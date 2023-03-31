@@ -1,9 +1,5 @@
 {
   "name": "vue-multiple-pages",
-  "sideEffects": [
-    "**/*.css",
-    "**/*.scss"
-  ],
   "version": "1.0.0",
   "description": "vue multiple pages",
   "private": true,
