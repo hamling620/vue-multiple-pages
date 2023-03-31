@@ -3,6 +3,7 @@ const commonConfig = require('./webpack.common')
 
 module.exports = merge(commonConfig, {
   mode: 'development',
+  devtool: 'source-map',
   stats: 'errors-only',
   devServer: {
     historyApiFallback: true,
@@ -17,5 +18,8 @@ module.exports = merge(commonConfig, {
         }
       }
     }
+  },
+  optimization: {
+    usedExports: false
   }
 })

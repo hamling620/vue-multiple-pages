@@ -1,12 +1,13 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { srcPath, distPath } = require('./config')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
+const webpack = require('webpack')
+const { srcPath, distPath, isDev } = require('./config')
+const { setEntry, setHtmlPlugin } = require('./utils')
 
 module.exports = {
-  entry: {
-    'pageOne': path.join(srcPath, 'pages/pageOne/index.js'),
-    'pageTwo': path.join(srcPath, 'pages/pageTwo/index.js')
-  },
+  entry: setEntry,
   output: {
     filename: '[name]/[name].[contenthash:8].js',
     path: path.resolve(distPath)
@@ -14,10 +15,15 @@ module.exports = {
   resolve: {
     alias: {
       '@': srcPath
-    }
+    },
+    extensions: ['.js', '.json', '.vue', '.jsx', '.ts', '.tsx']
   },
   module: {
     rules: [
+      {
+        test: /\.vue$/,
+        use: ['vue-loader']
+      },
       {
         test: /\.js/,
         use: ['babel-loader'],
@@ -26,7 +32,7 @@ module.exports = {
       {
         test: /\.(jpg|jpeg|png|gif|svg)$/,
         use: [
-          { 
+          {
             loader: 'url-loader',
             options: {
               limit: 8192,
@@ -36,23 +42,48 @@ module.exports = {
         ]
       },
       {
-        test: /\.scss$/,
+        test: /\.s?css$/,
         use: [
-          'style-loader',
+          isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
-              importLoaders: 2
+              importLoaders: 3,
+              sourceMap: false
             }
           },
           'postcss-loader',
-          'sass-loader'
+          'sass-loader',
+          {
+            loader: 'style-resources-loader',
+            options: {
+              patterns: path.resolve(srcPath, 'assets/scss/variable.scss')
+            }
+          }
         ]
       }
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
+    ...setHtmlPlugin(HtmlWebpackPlugin),
+    new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name]/[name].css'
+    }),
+    new webpack.DefinePlugin({
+      BASE_URL: "'./'",
+      __VUE_OPTIONS_API__: true,
+      __VUE_PROD_DEVTOOLS__: !isDev
+    })
+  ]
+}
+
+/**
+ * {
+    'pageOne': path.join(srcPath, 'pages/pageOne/index.js'),
+    'pageTwo': path.join(srcPath, 'pages/pageTwo/index.js')
+  }
+  new HtmlWebpackPlugin({
       template: path.join(__dirname, '../public/index.html'),
       filename: 'pageOne/index.html',
       chunks: ['pageOne']
@@ -62,5 +93,4 @@ module.exports = {
       filename: 'pageTwo/index.html',
       chunks: ['pageTwo']
     })
-  ]
-}
+ */
