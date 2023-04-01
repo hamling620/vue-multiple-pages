@@ -12,7 +12,8 @@
   "scripts": {
     "dev": "cross-env envMode=dev webpack serve --config ./build/webpack.dev.js --progress",
     "build": "cross-env envMode=production webpack --config ./build/webpack.prod.js",
-    "build:t1": "cross-env envMode=testing webpack --config ./build/webpack.prod.js"
+    "build:t1": "cross-env envMode=testing webpack --config ./build/webpack.prod.js",
+    "lint": "eslint --ext .ts,.tsx,.js,.vue ./src --fix"
   },
   "keywords": [],
   "author": "",
@@ -23,12 +24,21 @@
     "@babel/plugin-transform-runtime": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-typescript": "^7.21.4",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/parser": "^5.57.0",
     "babel-loader": "^9.1.2",
     "clean-webpack-plugin": "^4.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.3",
     "css-minimizer-webpack-plugin": "^5.0.0",
     "dotenv": "^16.0.3",
+    "eslint": "^8.37.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-vue": "^9.10.0",
+    "eslint-webpack-plugin": "^4.0.0",
     "file-loader": "^6.2.0",
     "glob": "^9.3.2",
     "html-webpack-plugin": "^5.5.0",
@@ -36,6 +46,7 @@
     "postcss": "^8.4.21",
     "postcss-loader": "^7.1.0",
     "postcss-preset-env": "^8.2.0",
+    "postcss-px-to-viewport": "^1.1.1",
     "sass": "^1.60.0",
     "sass-loader": "^13.2.2",
     "style-loader": "^3.3.2",
@@ -43,6 +54,7 @@
     "terser-webpack-plugin": "^5.3.7",
     "ts-loader": "^9.4.2",
     "typescript": "^5.0.3",
+    "unplugin-vue-components": "^0.24.1",
     "url-loader": "^4.1.1",
     "vue-loader": "^17.0.1",
     "webpack": "^5.77.0",
@@ -53,6 +65,7 @@
   "dependencies": {
     "@babel/runtime": "^7.21.0",
     "core-js": "^3.29.1",
+    "vant": "^4.1.2",
     "vue": "^3.2.47"
   }
 }

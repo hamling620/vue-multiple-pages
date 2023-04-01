@@ -1,5 +1,11 @@
 module.exports = {
   plugins: [
-    'postcss-preset-env'
+    'postcss-preset-env',
+    [
+      'postcss-px-to-viewport',
+      {
+        viewportWidth: 375
+      }
+    ]
   ]
 }

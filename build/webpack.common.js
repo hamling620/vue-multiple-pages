@@ -1,7 +1,10 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+// const ElintWebpackPlugin = require('eslint-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
+const { VantResolver } = require('unplugin-vue-components/resolvers')
+const ComponentsPlugin = require('unplugin-vue-components/webpack')
 const webpack = require('webpack')
 const { srcPath, distPath } = require('./config')
 const { setEntry, setHtmlPlugin, setEnv } = require('./utils')
@@ -19,7 +22,7 @@ module.exports = {
     alias: {
       '@': srcPath
     },
-    extensions: ['.ts', '.vue', '.tsx','.js'] // js不能省略
+    extensions: ['.ts', '.vue', '.tsx', '.js', '.mjs'] // js不能省略
   },
   module: {
     rules: [
@@ -84,12 +87,21 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: '[name]/[name].[contenthash:8].css'
     }),
+    // new ElintWebpackPlugin({
+    //   context: srcPath,
+    //   extensions: ['.ts', '.tsx', '.vue', '.js'],
+    //   fix: true
+    // }),
     new webpack.DefinePlugin({
       'process.env': {
         ...setEnv()
       },
       __VUE_OPTIONS_API__: false,
       __VUE_PROD_DEVTOOLS__: false
+    }),
+    ComponentsPlugin({
+      resolvers: [VantResolver()],
+      dts: 'src/components.d.ts'
     })
   ]
 }
