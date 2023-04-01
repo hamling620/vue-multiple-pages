@@ -1,6 +1,7 @@
-<script setup>
+<script lang="ts" setup>
   import { reactive } from 'vue'
   import imageUrl from '@/assets/images/girl.jpeg'
+
   const state = reactive({
     name: ''
   })

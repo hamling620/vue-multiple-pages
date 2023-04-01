@@ -8,11 +8,12 @@ module.exports = {
           version: '3.29'
         }
       }
-    ]
+    ],
+    '@babel/preset-typescript'
   ],
   plugins: [
     [
-      '@babel/plugin-transform-runtime',
+      '@babel/plugin-transform-typescript',
       {
         corejs: false,
         helpler: true,

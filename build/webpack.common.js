@@ -3,10 +3,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const webpack = require('webpack')
-const { srcPath, distPath, isDev } = require('./config')
-const { setEntry, setHtmlPlugin } = require('./utils')
+const { srcPath, distPath } = require('./config')
+const { setEntry, setHtmlPlugin, setEnv } = require('./utils')
 
-console.log(isDev)
+const isProd = process.env.envMode === 'production'
+console.log('isProd', isProd)
 
 module.exports = {
   entry: setEntry,
@@ -18,13 +19,23 @@ module.exports = {
     alias: {
       '@': srcPath
     },
-    extensions: ['.js', '.json', '.vue']
+    extensions: ['.ts', '.vue', '.tsx','.js'] // js不能省略
   },
   module: {
     rules: [
       {
         test: /\.vue$/,
         use: ['vue-loader'],
+        exclude: /node_modules/
+      },
+      {
+        test: /\.tsx?$/,
+        use: [{
+          loader: 'ts-loader',
+          options: {
+            appendTsSuffixTo: [/\.vue$/]
+          }
+        }],
         exclude: /node_modules/
       },
       {
@@ -47,7 +58,7 @@ module.exports = {
       {
         test: /\.s?css$/,
         use: [
-          isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+          isProd ? MiniCssExtractPlugin.loader : 'style-loader',
           {
             loader: 'css-loader',
             options: {
@@ -71,35 +82,16 @@ module.exports = {
     ...setHtmlPlugin(HtmlWebpackPlugin),
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
-      filename: '[name]/[name].css'
+      filename: '[name]/[name].[contenthash:8].css'
     }),
     new webpack.DefinePlugin({
-      BASE_URL: "'./'",
-      __VUE_OPTIONS_API__: true,
-      __VUE_PROD_DEVTOOLS__: isDev
+      'process.env': {
+        ...setEnv()
+      },
+      __VUE_OPTIONS_API__: false,
+      __VUE_PROD_DEVTOOLS__: false
     })
   ]
 }
 
-/**
- * {
-    'pageOne': path.join(srcPath, 'pages/pageOne/index.js'),
-    'pageTwo': path.join(srcPath, 'pages/pageTwo/index.js')
-  }
-  new HtmlWebpackPlugin({
-      template: path.join(__dirname, '../public/index.html'),
-      filename: 'pageOne/index.html',
-      chunks: ['pageOne']
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(__dirname, '../public/index.html'),
-      filename: 'pageTwo/index.html',
-      chunks: ['pageTwo']
-    })
- */
-
-// "sideEffects": [
-//   "**/*.css",
-//   "**/*.scss",
-//   "**/*.vue"
-// ],
+// sideEffects记得要忽略*.vue文件，否则样式会被tree-shaking
