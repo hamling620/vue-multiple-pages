@@ -1,5 +1,4 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const ElintWebpackPlugin = require('eslint-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
@@ -7,13 +6,17 @@ const { VantResolver } = require('unplugin-vue-components/resolvers')
 const ComponentsPlugin = require('unplugin-vue-components/webpack')
 const webpack = require('webpack')
 const { srcPath, distPath } = require('./config')
-const { setEntry, setHtmlPlugin, setEnv } = require('./utils')
+const { getEntryTemplate, setEnv } = require('./utils')
+const { separator } = require('../scripts/constants')
+
+const packages = process.env.packages.split(separator)
+const { entry, htmlPlugins } = getEntryTemplate(packages)
 
 const isProd = process.env.envMode === 'production'
 console.log('isProd', isProd)
 
 module.exports = {
-  entry: setEntry,
+  entry,
   output: {
     filename: '[name]/[name].[contenthash:8].js',
     path: path.resolve(distPath)
@@ -82,7 +85,7 @@ module.exports = {
     ]
   },
   plugins: [
-    ...setHtmlPlugin(HtmlWebpackPlugin),
+    ...htmlPlugins,
     new VueLoaderPlugin(),
     new MiniCssExtractPlugin({
       filename: '[name]/[name].[contenthash:8].css'
