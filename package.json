@@ -13,7 +13,8 @@
     "dev": "cross-env envMode=dev node ./scripts/dev.js",
     "build": "cross-env envMode=production node ./scripts/prod.js",
     "build:t1": "cross-env envMode=testing node ./scripts/prod.js",
-    "lint": "eslint --ext .ts,.tsx,.js,.vue ./src --fix"
+    "lint": "eslint --ext .ts,.tsx,.js,.vue ./src --fix",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +25,8 @@
     "@babel/plugin-transform-runtime": "^7.21.0",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-typescript": "^7.21.4",
+    "@commitlint/cli": "^17.5.1",
+    "@commitlint/config-conventional": "^17.4.4",
     "@typescript-eslint/eslint-plugin": "^5.57.0",
     "@typescript-eslint/parser": "^5.57.0",
     "babel-loader": "^9.1.2",
@@ -44,6 +47,7 @@
     "file-loader": "^6.2.0",
     "glob": "^9.3.2",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.3",
     "inquirer": "^8.2.5",
     "mini-css-extract-plugin": "^2.7.5",
     "postcss": "^8.4.21",
@@ -69,6 +73,7 @@
     "@babel/runtime": "^7.21.0",
     "core-js": "^3.29.1",
     "vant": "^4.1.2",
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "weixin-js-sdk": "^1.6.0"
   }
 }
