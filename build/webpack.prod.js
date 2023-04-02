@@ -13,6 +13,27 @@ module.exports = merge(commonConfig, {
       new CssMinimizerWebpackPlugin(),
       new TerserWebpackPlugin()
     ]
+    // ,
+    // splitChunks: {
+    //   chunks: 'all',
+    //   cacheGroups: {
+    //     // 第三方模块
+    //     vendor: {
+    //       name: 'vendor',
+    //       priority: 1,
+    //       test: /node_modules/,
+    //       minSize: 30,
+    //       minChunks: 1
+    //     },
+    //     // 公共模块
+    //     common: {
+    //       name: 'common',
+    //       priority: 0,
+    //       minSize: 0,
+    //       minChunks: 2 // 模块最少复用过两次
+    //     }
+    //   }
+    // }
   },
   plugins: [
     new CleanWebpackPlugin()

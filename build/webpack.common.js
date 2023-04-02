@@ -20,6 +20,7 @@ module.exports = {
   output: {
     filename: '[name]/[name].[contenthash:8].js',
     path: path.resolve(distPath)
+    // chunkFilename: '[name].[chunkhash:8].js'
   },
   resolve: {
     alias: {
