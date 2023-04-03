@@ -1,7 +1,6 @@
 <!-- eslint-disable vue/no-v-model-argument -->
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { Button as VanButton, Switch as VanSwitch, Calendar as VanCalendar, Cell as VanCell } from 'vant'
 import HelloWorld from './HelloWorld.vue'
 
 const checked = ref(true)

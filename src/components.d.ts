@@ -9,7 +9,10 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    VanAddressEdit: typeof import('vant/es')['AddressEdit']
+    VanButton: typeof import('vant/es')['Button']
     VanCalendar: typeof import('vant/es')['Calendar']
     VanCell: typeof import('vant/es')['Cell']
+    VanSwitch: typeof import('vant/es')['Switch']
   }
 }

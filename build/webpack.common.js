@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
 const { VantResolver } = require('unplugin-vue-components/resolvers')
 const ComponentsPlugin = require('unplugin-vue-components/webpack')
+const AutoImportPlugin = require('unplugin-auto-import/webpack')
 const webpack = require('webpack')
 const { srcPath, distPath } = require('./config')
 const { getEntryTemplate, setEnv } = require('./utils')
@@ -102,6 +103,10 @@ module.exports = {
       },
       __VUE_OPTIONS_API__: false,
       __VUE_PROD_DEVTOOLS__: false
+    }),
+    AutoImportPlugin({
+      resolvers: [VantResolver()],
+      dts: 'src/auto-imports.d.ts'
     }),
     ComponentsPlugin({
       resolvers: [VantResolver()],

@@ -1,5 +1,4 @@
 <script lang="ts" setup name="HelloWorld">
-import { Button as VanButton, Switch as VanSwitch, AddressEdit as VanAddressEdit } from 'vant'
 
 </script>
 
